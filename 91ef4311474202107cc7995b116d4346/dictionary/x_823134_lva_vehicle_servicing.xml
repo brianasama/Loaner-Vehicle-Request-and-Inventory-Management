@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="b5c8b652470e42107cc7995b116d43bb" label="Vehicle Servicing" max_length="40" name="x_823134_lva_vehicle_servicing" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Vehicle Issues" mandatory="true" max_length="1000" name="u_string_6" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="encode_utf8=false" label="Vehicle Tracker" mandatory="true" max_length="32" name="u_reference_1" reference="x_823134_lva_vehicle_tracker" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Date sent for Servicing" mandatory="true" max_length="40" name="u_glide_date_4" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Ticket Status" mandatory="true" max_length="40" name="u_choice_5" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Closed" sequence="1" value="closed"/>
+                <element inactive="true" inactive_on_update="true" label="Choice 3" sequence="0" value="Choice 3"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="2" value="Cancelled"/>
+                <element inactive_on_update="false" label="Open" sequence="0" value="open"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Vehicle Status" mandatory="true" max_length="40" name="u_choice_3" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Decommissioned" sequence="2" value="decommissioned"/>
+                <element inactive_on_update="false" label="In Service" sequence="0" value="in service"/>
+                <element inactive_on_update="false" label="Returned to Warehouse" sequence="1" value="returned to warehouse"/>
+            </choice>
+        </element>
+        <element attributes="encode_utf8=false" label="Vehicle" mandatory="true" max_length="32" name="u_reference_2" reference="x_823134_lva_loaner_vehicle_catalog" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Work Performed" max_length="1000" name="u_string_7" type="string"/>
+        <index name="index">
+            <element name="u_reference_1"/>
+        </index>
+        <index name="index2">
+            <element name="u_reference_2"/>
+        </index>
+    </element>
+</database>

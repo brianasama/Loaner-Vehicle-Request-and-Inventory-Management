@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_823134_lva_vehicle_tracker</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_823134_lva_vehicle_tracker">vehicle_statusCHANGESTOsent for servicing^EQ<item display_value="Sent for Servicing" endquery="false" field="vehicle_status" goto="false" newquery="false" operator="CHANGESTO" or="false" value="sent for servicing"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Create Servicing Ticket</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+    // Add your code here
+
+    var lvsgr = new GlideRecord('x_823134_lva_vehicle_servicing'); //Create a variable for a new GlideRecord on the servicing table
+    lvsgr.addQuery('u_reference_1', current.sys_id); //Query the servicing table for the current sys_id of the record
+    //that is in the vehicle tracker field
+    lvsgr.addQuery('u_choice_1', 'open'); //Query the servicing table for records where the tracker status is open
+    lvsgr.query(); //Execute the query
+
+    if (!lvsgr.next()) { //Create a “if statement”: if no matching records are found from the previous query move on with the script: .next()
+
+        var lvstgr = new GlideRecord('x_823134_lva_vehicle_servicing'); //Create a variable for a new GlideRecord on the servicing table
+        var currDate = new GlideDate(); //Create a variable for a new GlideDate that will get the current date 
+        //( this will be used to set the current date in the servicing ticket’s opening date)
+
+        lvstgr.initialize(); //Initialize the creation of a new record on the servicing table using the GlideRecord variable you created
+        //Populate the required fields to create the new ticket per the stories requirement
+        lvstgr.setValue('u_reference_1', current.sys_id); //Set the value of vehicle tracker to the current records sys_id
+        lvstgr.setValue('u_reference_2', current.vehicle); //Set the value of vehicle to the current records vehicle value
+        lvstgr.setValue('u_choice_3', 'in service'); //Set the value of vehicle status to in service
+        lvstgr.setValue('u_glide_date_4', currDate.getValue()); //Set the value of date sent for servicing to the current date
+        lvstgr.setValue('u_choice_5', 'open'); //Set the value of ticket status to open
+        lvstgr.insert(); //Insert the new record
+
+
+
+    }
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-07 01:23:25</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>100909c7472202107cc7995b116d435d</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Create Servicing Ticket</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Loaner Vehicle Request and Inventory" source="x_823134_lva">91ef4311474202107cc7995b116d4346</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Vehicle Request and Inventory">91ef4311474202107cc7995b116d4346</sys_scope>
+        <sys_update_name>sys_script_100909c7472202107cc7995b116d435d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-07 03:40:23</sys_updated_on>
+        <template/>
+        <when>after</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=100909c7472202107cc7995b116d435d"/>
+</record_update>
